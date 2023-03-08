@@ -5,7 +5,7 @@
  */
 package modelo;
 
-import controlador.clsUsuario;
+import controlador.clsVendedor;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,32 +16,35 @@ import java.util.List;
  */
 public class daoVendedor {
 
-    private static final String SQL_SELECT = "SELECT usuid, usunombre, usucontrasena FROM tbl_usuario";
-    private static final String SQL_INSERT = "INSERT INTO tbl_usuario(usunombre, usucontrasena) VALUES(?, ?)";
-    private static final String SQL_UPDATE = "UPDATE tbl_usuario SET usunombre=?, usucontrasena=? WHERE usuid = ?";
-    private static final String SQL_DELETE = "DELETE FROM tbl_usuario WHERE usuid=?";
-    private static final String SQL_SELECT_NOMBRE = "SELECT usuid, usunombre, usucontrasena FROM tbl_usuario WHERE usunombre = ?";
-    private static final String SQL_SELECT_ID = "SELECT usuid, usunombre, usucontrasena FROM tbl_usuario WHERE usuid = ?";    
+    private static final String SQL_SELECT = "SELECT codigo_vendedor, nombre_vendedor, direccion_vendedor, telefono_vendedor, nit_vendedor, estatus_vendedor FROM vendedores";
+    private static final String SQL_INSERT = "INSERT INTO vendedores(nombre_vendedor, direccion_vendedor, telefono_vendedor, nit_vendedor, estatus_vendedor) VALUES(?, ?, ?, ?, ?)";
+    private static final String SQL_UPDATE = "UPDATE vendedores SET nombre_vendedor=?, direccion_vendedor=?, telefono_vendedor=?, nit_vendedor=?, estatus_vendedor=? WHERE codigo_vendedor = ?";
+    private static final String SQL_DELETE = "DELETE FROM vendedores WHERE codigo_vendedor=?";
+    private static final String SQL_SELECT_NOMBRE = "SELECT codigo_vendedor, nombre_vendedor, direccion_vendedor, telefono_vendedor, nit_vendedor, estatus_vendedor FROM vendedores WHERE nommbre_vendedor = ?";
+    private static final String SQL_SELECT_ID = "SELECT codigo_vendedor, nombre_vendedor, direccion_vendedor, telefono_vendedor, nit_vendedor, estatus_vendedor FROM vendedores WHERE codigo_vendedor = ?";    
 
-    public List<clsUsuario> consultaVendedor() {
+    public List<clsVendedor> consultaVendedor() {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         
-        List<clsUsuario> usuarios = new ArrayList<>();
+        List<clsVendedor> vendedor = new ArrayList<>();
         try {
             conn = Conexion.getConnection();
             stmt = conn.prepareStatement(SQL_SELECT);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                int id = rs.getInt("usuid");
-                String nombre = rs.getString("usunombre");
-                String contrasena = rs.getString("usucontrasena");
-                clsUsuario usuario = new clsUsuario();
-                usuario.setIdUsuario(id);
-                usuario.setNombreUsuario(nombre);
-                usuario.setContrasenaUsuario(contrasena);
-                usuarios.add(usuario);
+                int id = rs.getInt("codigo_vendedor");
+                String nombre = rs.getString("nombre_vendedor");
+                String direccion = rs.getString("direccion_vendedor");
+                int telefono = rs.getInt("telefono_vendedor");
+                int nit = rs.getInt("nit_vendedor");
+                int estatus = rs.getInt("estatus_vendedor");
+                //clsVendedor vendedor = new clsVendedor();
+                //vendedor.setcodigo_vendedor(id);
+                //vendedor.nombre_vendedor(nombre);
+                //vendedor.setContrasenaUsuario(contrasena);
+                //vendedor.add(vendedor);
             }
         } catch (SQLException ex) {
             ex.printStackTrace(System.out);
@@ -50,18 +53,18 @@ public class daoVendedor {
             Conexion.close(stmt);
             Conexion.close(conn);
         }
-        return usuarios;
+        return vendedor;
     }
 
-    public int ingresaVendedor(clsUsuario usuario) {
+    public int ingresaVendedor(clsVendedor vendedor) {
         Connection conn = null;
         PreparedStatement stmt = null;
         int rows = 0;
         try {
             conn = Conexion.getConnection();
             stmt = conn.prepareStatement(SQL_INSERT);
-            stmt.setString(1, usuario.getNombreUsuario());
-            stmt.setString(2, usuario.getContrasenaUsuario());
+            stmt.setString(1, vendedor.getnombre_vendedor());
+            stmt.setString(2, vendedor.getdireccion_vendedor());
 
             System.out.println("ejecutando query:" + SQL_INSERT);
             rows = stmt.executeUpdate();
@@ -76,7 +79,7 @@ public class daoVendedor {
         return rows;
     }
 
-    public int actualizaVendedor(clsUsuario usuario) {
+    public int actualizaVendedor(clsVendedor vendedor) {
         Connection conn = null;
         PreparedStatement stmt = null;
         int rows = 0;
@@ -84,9 +87,9 @@ public class daoVendedor {
             conn = Conexion.getConnection();
             System.out.println("ejecutando query: " + SQL_UPDATE);
             stmt = conn.prepareStatement(SQL_UPDATE);
-            stmt.setString(1, usuario.getNombreUsuario());
-            stmt.setString(2, usuario.getContrasenaUsuario());
-            stmt.setInt(3, usuario.getIdUsuario());
+            stmt.setString(1, vendedor.getnombre_vendedor());
+            stmt.setString(2, vendedor.getdireccion_vendedor());
+            stmt.setInt(3, vendedor.getcodigo_vendedor());
 
             rows = stmt.executeUpdate();
             System.out.println("Registros actualizado:" + rows);
@@ -101,7 +104,7 @@ public class daoVendedor {
         return rows;
     }
 
-    public int borrarVendedor(clsUsuario usuario) {
+    public int borrarVendedor(clsVendedor vendedor) {
         Connection conn = null;
         PreparedStatement stmt = null;
         int rows = 0;
@@ -110,7 +113,7 @@ public class daoVendedor {
             conn = Conexion.getConnection();
             System.out.println("Ejecutando query:" + SQL_DELETE);
             stmt = conn.prepareStatement(SQL_DELETE);
-            stmt.setInt(1, usuario.getIdUsuario());
+            stmt.setInt(1, vendedor.getcodigo_vendedor());
             rows = stmt.executeUpdate();
             System.out.println("Registros eliminados:" + rows);
         } catch (SQLException ex) {
@@ -123,27 +126,27 @@ public class daoVendedor {
         return rows;
     }
 
-    public clsUsuario consultaVendedorPorNombre(clsUsuario usuario) {
+    public clsVendedor consultaVendedorPorNombre(clsVendedor vendedor) {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
             conn = Conexion.getConnection();
-            System.out.println("Ejecutando query:" + SQL_SELECT_NOMBRE + " objeto recibido: " + usuario);
+            System.out.println("Ejecutando query:" + SQL_SELECT_NOMBRE + " objeto recibido: " + vendedor);
             stmt = conn.prepareStatement(SQL_SELECT_NOMBRE);
             //stmt.setInt(1, usuario.getIdUsuario());            
-            stmt.setString(1, usuario.getNombreUsuario());
+            stmt.setString(1, vendedor.getnombre_vendedor());
             rs = stmt.executeQuery();
             while (rs.next()) {
-                int id = rs.getInt("usuid");
-                String nombre = rs.getString("usunombre");
-                String contrasena = rs.getString("usucontrasena");
+                int id = rs.getInt("codigo_vendedor");
+                String nombre = rs.getString("nombre_vendedor");
+                String direccion = rs.getString("direccion_vendedor");
 
                 //usuario = new clsUsuario();
-                usuario.setIdUsuario(id);
-                usuario.setNombreUsuario(nombre);
-                usuario.setContrasenaUsuario(contrasena);
-                System.out.println(" registro consultado: " + usuario);                
+                vendedor.setcodigo_vendedor(id);
+                vendedor.setnombre_vendedor(nombre);
+                vendedor.setdireccion_vendedor(direccion);
+                System.out.println(" registro consultado: " + vendedor);                
             }
             //System.out.println("Registros buscado:" + persona);
         } catch (SQLException ex) {
@@ -155,29 +158,30 @@ public class daoVendedor {
         }
 
         //return personas;  // Si se utiliza un ArrayList
-        return usuario;
+        return vendedor;
     }
-    public clsUsuario consultaUsuariosPorId(clsUsuario usuario) {
+    public clsVendedor consultaVendedorPorId(clsVendedor vendedor) {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
             conn = Conexion.getConnection();
-            System.out.println("Ejecutando query:" + SQL_SELECT_NOMBRE + " objeto recibido: " + usuario);
+            System.out.println("Ejecutando query:" + SQL_SELECT_NOMBRE + " objeto recibido: " + vendedor);
             stmt = conn.prepareStatement(SQL_SELECT_ID);
-            stmt.setInt(1, usuario.getIdUsuario());            
+            stmt.setInt(1, vendedor.getcodigo_vendedor());            
             //stmt.setString(1, usuario.getNombreUsuario());
             rs = stmt.executeQuery();
             while (rs.next()) {
-                int id = rs.getInt("usuid");
-                String nombre = rs.getString("usunombre");
-                String contrasena = rs.getString("usucontrasena");
+                int id = rs.getInt("codigo_vendedor");
+                String nombre = rs.getString("nombre_vendedor");
+                String direccion = rs.getString("direccion_vendedor");
 
                 //usuario = new clsUsuario();
-                usuario.setIdUsuario(id);
-                usuario.setNombreUsuario(nombre);
-                usuario.setContrasenaUsuario(contrasena);
-                System.out.println(" registro consultado: " + usuario);                
+                vendedor.setcodigo_vendedor(id);
+                vendedor.setnombre_vendedor(nombre);
+                vendedor.setdireccion_vendedor(direccion
+                );
+                System.out.println(" registro consultado: " + vendedor);                
             }
             //System.out.println("Registros buscado:" + persona);
         } catch (SQLException ex) {
@@ -189,6 +193,10 @@ public class daoVendedor {
         }
 
         //return personas;  // Si se utiliza un ArrayList
-        return usuario;
+        return vendedor;
     }    
+
+    public clsVendedor consultaVendedorPorNombre(Object vendedor) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
