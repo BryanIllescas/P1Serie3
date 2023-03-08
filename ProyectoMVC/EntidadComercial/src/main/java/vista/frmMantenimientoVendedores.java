@@ -33,16 +33,16 @@ public class frmMantenimientoVendedores extends javax.swing.JInternalFrame {
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("ID");
         modelo.addColumn("nombre");
-        modelo.addColumn("Contraseña");
+        modelo.addColumn("direccion");
         clsVendedor usuario = new clsVendedor();
         //VendedorDAO vendedorDAO = new VendedorDAO();
         List<clsVendedor> listaVendedor = usuario.getListadoVendedor();
         tablaUsuarios.setModel(modelo);
         String[] dato = new String[3];
         for (int i = 0; i < listaVendedor.size(); i++) {
-            dato[0] = Integer.toString(listaVendedor.get(i).getIdUsuario());
-            dato[1] = listaVendedor.get(i).getNombreVendedor();
-            dato[2] = listaVendedor.get(i).getContrasenaVendedor();
+            dato[0] = Integer.toString(listaVendedor.get(i).getcodigo_vendedor());
+            dato[1] = listaVendedor.get(i).getnombre_vendedor();
+            dato[2] = listaVendedor.get(i).getdireccion_vendedor();
             modelo.addRow(dato);
         }       
     }
@@ -276,8 +276,8 @@ public class frmMantenimientoVendedores extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         int registrosBorrados=0;
         clsVendedor usuario = new clsVendedor();
-        usuario.setIdUsuario(Integer.parseInt(txtbuscado.getText()));
-        registrosBorrados=Vendedor.setBorrarVendedor(Vendedor);
+        usuario.setcodigo_vendedor(Integer.parseInt(txtbuscado.getText()));
+        registrosBorrados=vendedor.setBorrarVendedor(vendedor);
         JOptionPane.showMessageDialog(null, "Registro Borrado\n", 
                     "Información del Sistema", JOptionPane.INFORMATION_MESSAGE);
         llenadoDeTablas();
@@ -285,10 +285,10 @@ public class frmMantenimientoVendedores extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        clsVendedor usuario = new clsVendedor();
-        Vendedor.setNombreUsuario(txtNombre.getText());
-        Vendedor.setContrasenaUsuario(txtContrasena.getText());
-        Vendedor.setIngresarVendedor(Vendedor);
+        clsVendedor vendedor = new clsVendedor();
+        vendedor.setnombre_vendedor(txtNombre.getText());
+        vendedor.setdireccion_vendedor(txtContrasena.getText());
+        vendedor.setIngresarVendedor(vendedor);
         JOptionPane.showMessageDialog(null, "Registro Ingresado\n", 
                     "Información del Sistema", JOptionPane.INFORMATION_MESSAGE);
         llenadoDeTablas();
@@ -297,22 +297,22 @@ public class frmMantenimientoVendedores extends javax.swing.JInternalFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-        clsVendedor usuario = new clsVendedor();
+        clsVendedor vendedor = new clsVendedor();
         //usuario.setNombreUsuario(txtbuscado.getText());        
-        Vendedor.setIdVendedor(Integer.parseInt(txtbuscado.getText()));        
-        Vendedor = Vendedor.getBuscarInformacionVendedorPorId(Vendedor);
-        System.out.println("Vendedor retornado:" + Vendedor);        
-        txtNombre.setText(Vendedor.getNombreVendedor());
-        txtContrasena.setText(usuario.getContrasenaVendedor());
+        vendedor.setcodigo_vendedor(Integer.parseInt(txtbuscado.getText()));        
+        vendedor = vendedor.getBuscarInformacionVendedorPorId(vendedor);
+        System.out.println("Vendedor retornado:" + vendedor);        
+        txtNombre.setText(vendedor.getnombre_vendedor());
+        txtContrasena.setText(vendedor.getdireccion_vendedor());
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
 //        // TODO add your handling code here:
-        clsUsuario usuario = new clsUsuario();
-        usuario.setIdUsuario(Integer.parseInt(txtbuscado.getText()));
-        usuario.setNombreUsuario(txtNombre.getText());
-        usuario.setContrasenaUsuario(txtContrasena.getText());
-        usuario.setModificarUsuario(usuario);
+        clsVendedor vendedor = new clsVendedor();
+        vendedor.setcodigo_vendedor(Integer.parseInt(txtbuscado.getText()));
+        vendedor.setnombre_vendedor(txtNombre.getText());
+        vendedor.setdireccion_vendedor(txtContrasena.getText());
+        vendedor.setModificarVendedor(vendedor);
         JOptionPane.showMessageDialog(null, "Registro Modificado\n", 
                     "Información del Sistema", JOptionPane.INFORMATION_MESSAGE);        
         llenadoDeTablas();
@@ -387,4 +387,10 @@ public class frmMantenimientoVendedores extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtbuscado;
     // End of variables declaration//GEN-END:variables
+
+    private static class vendedor {
+
+        public vendedor() {
+        }
+    }
 }

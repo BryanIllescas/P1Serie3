@@ -11,85 +11,129 @@ import modelo.daoVendedor;
  * @author visitante
  */
 public class clsVendedor {
-    private int IdUsuario;
-    private String NombreUsuario;
-    private String ContrasenaUsuario;
+    private int codigo_vendedor;
+    private String nombre_vendedor;
+    private String direccion_vendedor;
+    private int telefono_vendedor;
+    private int nit_vendedor;
+    private int estatus_vendedor;
 
     public clsVendedor() {
     }
     
-    public clsVendedor(int IdVendedor) {
-        this.IdVendedor = IdVendedor;
+    public clsVendedor(int codigo_vendedor) {
+        this.codigo_vendedor = codigo_vendedor;
     }    
     
-    public clsVendedor(String NombreUsuario, String ContrasenaUsuario) {
-        this.NombreUsuario = NombreUsuario;
-        this.ContrasenaUsuario = ContrasenaUsuario;
+    public clsVendedor(String nombre_vendedor, String direccion_vendedor, int telefono_vendedor, int nit_vendedor, int estatus_vendedor) {
+        this.nombre_vendedor = nombre_vendedor;
+        this.direccion_vendedor = direccion_vendedor;
+        this.telefono_vendedor = telefono_vendedor;
+        this.nit_vendedor = nit_vendedor;
+        this.estatus_vendedor = estatus_vendedor;
     }
     
-    public clsVendedor(int IdUsuario, String NombreUsuario, String ContrasenaUsuario) {
-        this.IdUsuario = IdUsuario;
-        this.NombreUsuario = NombreUsuario;
-        this.ContrasenaUsuario = ContrasenaUsuario;
+    public clsVendedor(int codigo_vendedor, String nombre_vendedor, String direccion_vendedor, int telefono_vendedor, int nit_vendedor, int estatus_vendedor) {
+        this.codigo_vendedor = codigo_vendedor;
+        this.nombre_vendedor = nombre_vendedor;
+        this.direccion_vendedor = direccion_vendedor;
+        this.telefono_vendedor = telefono_vendedor;
+        this.nit_vendedor = nit_vendedor;
+        this.estatus_vendedor = estatus_vendedor;
     }    
 
-    public int getIdUsuario() {
-        return IdUsuario;
+    public int getcodigo_vendedor() {
+        return codigo_vendedor;
     }
 
-    public void setIdUsuario(int IdUsuario) {
-        this.IdUsuario = IdUsuario;
+    public void setcodigo_vendedor(int codigo_vendedor) {
+        this.codigo_vendedor = codigo_vendedor;
     }
 
-    public String getNombreUsuario() {
-        return NombreUsuario;
+    public String getnombre_vendedor() {
+        return nombre_vendedor;
     }
 
-    public void setNombreUsuario(String NombreUsuario) {
-        this.NombreUsuario = NombreUsuario;
+    public void setnombre_vendedor(String nombre_vendedor) {
+        this.nombre_vendedor = nombre_vendedor;
     }
 
-    public String getContrasenaUsuario() {
-        return ContrasenaUsuario;
+    public String getdireccion_vendedor() {
+        return direccion_vendedor;
     }
 
-    public void setContrasenaUsuario(String ContrasenaUsuario) {
-        this.ContrasenaUsuario = ContrasenaUsuario;
+    public void setdireccion_vendedoro(String direccion_vendedor) {
+        this.direccion_vendedor = direccion_vendedor;
+    }
+    public int getnit_vendedor() {
+        return nit_vendedor;
+    }
+
+    public void setnit_vendedor(int nit_vendedor) {
+        this.nit_vendedor = nit_vendedor;
+    }
+    public int getestatus_vendedor() {
+        return estatus_vendedor;
+    }
+
+    public void setestatus_vendedor(int estatus_vendedor) {
+        this.estatus_vendedor = estatus_vendedor;
     }
     @Override
     public String toString() {
-        return "clsVendedor{" + "IdUsuario=" + IdUsuario + ", NombreUsuario=" + NombreUsuario + ", ContrasenaUsuario=" + ContrasenaUsuario + '}';
+        return "clsVendedor{" + "codigo_vendedor=" + codigo_vendedor + ", nombre_vendedor=" + nombre_vendedor + ", direccion_vendedor=" + direccion_vendedor + ", telefono_vendedor=" + telefono_vendedor + ", nit_vendedor=" + nit_vendedor + ", estatus_vendedor=" + estatus_vendedor + '}';
     }
     //Metodos de acceso a la capa controlador
-    public clsVendedor getBuscarInformacionVendedorPorNombre(clsVendedor Vendedor)
+    public clsVendedor getBuscarInformacionVendedorPorNombre(clsVendedor nombre_vendedor)
     {
         daoVendedor daoVendedor = new daoVendedor();
-        return daoVendedor.consultaVendedorPorNombre(Vendedor);
+        Object vendedor = null;
+        return daoVendedor.consultaVendedorPorNombre((clsVendedor) vendedor);
     }
-    public clsUsuario getBuscarInformacionUsuarioPorId(clsUsuario usuario)
+    public clsVendedor getBuscarInformacionVendedorPorId(clsVendedor codigo_vendedor)
     {
         daoVendedor daousuario = new daoVendedor();
-        return daousuario.consultaUsuariosPorId(usuario);
+        clsVendedor vendedor = null;
+        return daousuario.consultaVendedorPorId(vendedor);
     }    
-    public List<clsUsuario> getListadoUsuarios()
+    public List<clsVendedor> getListadoVendedor()
     {
-        daoVendedor daousuario = new daoVendedor();
-        List<clsUsuario> listadoUsuarios = daousuario.consultaVendedor();
-        return listadoUsuarios;
+        daoVendedor daoVendedor = new daoVendedor();
+        List<clsVendedor> listadoVendedor = daoVendedor.consultaVendedor();
+        return listadoVendedor;
     }
-    public int setBorrarUsuario(clsUsuario usuario)
+    public int setBorrarVendedor(clsVendedor nombre_vendedor)
     {
-        daoVendedor daousuario = new daoVendedor();
-        return daousuario.borrarVendedor(usuario);
+        daoVendedor daoVendedor = new daoVendedor();
+        clsVendedor vendedor = null;
+        return daoVendedor.borrarVendedor(vendedor);
     }          
-    public int setIngresarUsuario(clsUsuario usuario)
+    public int setIngresarVendedor(clsVendedor nombre_vendedor)
     {
-        daoVendedor daousuario = new daoVendedor();
-        return daousuario.ingresaVendedor(usuario);
+        daoVendedor daoVendedor = new daoVendedor();
+        clsVendedor vendedor = null;
+        return daoVendedor.ingresaVendedor(vendedor);
     }              
-    public int setModificarUsuario(clsUsuario usuario)
+    public int setModificarVendedor(clsVendedor nombre_vendedor)
     {
-        daoVendedor daousuario = new daoVendedor();
-        return daousuario.actualizaVendedor(usuario);
+        daoVendedor daoVendedor = new daoVendedor();
+        clsVendedor vendedor = null;
+        return daoVendedor.actualizaVendedor(vendedor);
     }              
+
+    public void add(clsVendedor vendedor) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public void nombre_vendedor(String nombre) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public void setdireccion_vendedor(String direccion) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    /*public void setdireccion_vendedor(String direccion) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }*/
 }
