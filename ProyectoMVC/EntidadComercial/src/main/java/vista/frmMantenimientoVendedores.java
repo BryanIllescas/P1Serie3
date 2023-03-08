@@ -34,9 +34,9 @@ public class frmMantenimientoVendedores extends javax.swing.JInternalFrame {
         modelo.addColumn("ID");
         modelo.addColumn("nombre");
         modelo.addColumn("direccion");
-        clsVendedor usuario = new clsVendedor();
+        clsVendedor vendedor = new clsVendedor();
         //VendedorDAO vendedorDAO = new VendedorDAO();
-        List<clsVendedor> listaVendedor = usuario.getListadoVendedor();
+        List<clsVendedor> listaVendedor = vendedor.getListadoVendedor();
         tablaUsuarios.setModel(modelo);
         String[] dato = new String[3];
         for (int i = 0; i < listaVendedor.size(); i++) {
@@ -277,7 +277,7 @@ public class frmMantenimientoVendedores extends javax.swing.JInternalFrame {
         int registrosBorrados=0;
         clsVendedor usuario = new clsVendedor();
         usuario.setcodigo_vendedor(Integer.parseInt(txtbuscado.getText()));
-        registrosBorrados=vendedor.setBorrarVendedor(vendedor);
+        registrosBorrados=vendedor.setBorrarVendedor();
         JOptionPane.showMessageDialog(null, "Registro Borrado\n", 
                     "Información del Sistema", JOptionPane.INFORMATION_MESSAGE);
         llenadoDeTablas();
@@ -389,6 +389,10 @@ public class frmMantenimientoVendedores extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     private static class vendedor {
+
+        private static int setBorrarVendedor() {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
 
         public vendedor() {
         }
